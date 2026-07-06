@@ -24,11 +24,8 @@ final class AppState: ObservableObject {
     func runSelectedShortcut() {
         guard shortcuts.indices.contains(selectedIndex) else { return }
         ShortcutRunner.run(name: shortcuts[selectedIndex].name)
-        // On garde le menu ouvert : l'utilisateur peut enchaîner plusieurs
-        // raccourcis sans avoir à rappuyer sur HOME entre chaque.
     }
 
-    /// Rangée unique façon menu Switch : seuls gauche/droite déplacent la sélection
     func navigate(_ direction: NavigationDirection) {
         let count = shortcuts.count
         guard count > 0 else { return }

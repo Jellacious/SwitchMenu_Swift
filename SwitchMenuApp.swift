@@ -10,10 +10,6 @@ struct SwitchMenuApp: App {
             ContentView()
                 .environmentObject(state)
                 .onAppear {
-                    // Cache immédiatement la fenêtre auto-affichée par SwiftUI.
-                    // Sinon elle est déjà "posée" sur le Bureau courant AVANT
-                    // qu'on ait pu mettre .canJoinAllSpaces, et macOS la laisse
-                    // coincée sur le Bureau 1 au lieu de suivre le jeu plein écran.
                     NSApp.windows.first?.orderOut(nil)
 
                     appDelegate.controllerManager = GameControllerManager(appState: state)
@@ -36,7 +32,6 @@ struct SwitchMenuApp: App {
     private func configureWindow(state: AppState) {
         guard let window = NSApp.windows.first else { return }
 
-        // Ne pas restaurer une position précédente
         window.isRestorable = false
 
         window.styleMask.remove(.resizable)
@@ -46,9 +41,6 @@ struct SwitchMenuApp: App {
         window.standardWindowButton(.miniaturizeButton)?.isHidden = true
         window.standardWindowButton(.zoomButton)?.isHidden = true
 
-        // Permet à la fenêtre d'apparaître PAR-DESSUS une app en plein écran
-        // (ex: un jeu) sans changer de Bureau/Space, et sur tous les Spaces.
-        // Ces réglages doivent être posés AVANT le premier affichage.
         window.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
         window.level = .floating
 
@@ -57,11 +49,6 @@ struct SwitchMenuApp: App {
         NSApp.activate(ignoringOtherApps: true)
         window.makeKeyAndOrderFront(nil)
 
-        // Le passage à .activate ci-dessus a pu faire basculer macOS vers le
-        // Bureau "natif" de la fenêtre. On redonne le focus à l'app cible
-        // choisie dans les Settings juste après : comme notre fenêtre est
-        // .canJoinAllSpaces + .floating, elle reste visible par-dessus, mais
-        // macOS revient sur le bon Space/plein écran.
         if let targetApp = state.targetAppStore.runningTargetApp {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                 targetApp.activate(options: [.activateAllWindows])
@@ -69,9 +56,6 @@ struct SwitchMenuApp: App {
         }
     }
 
-    /// En mode souris, la fenêtre passe en petit badge dans un coin pour ne
-    /// pas masquer le jeu/l'app en dessous. En mode menu, elle revient au
-    /// centre de l'écran courant.
     private func repositionWindow(for mode: AppMode) {
         guard let window = NSApp.windows.first,
               let screen = window.screen ?? NSScreen.main else { return }

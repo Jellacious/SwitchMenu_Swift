@@ -1,7 +1,5 @@
 import SwiftUI
 
-/// Petit badge compact affiché dans un coin de l'écran pendant le mode souris,
-/// pour ne pas masquer le jeu/l'app en dessous.
 struct MouseModeOverlay: View {
     var body: some View {
         HStack(spacing: 10) {

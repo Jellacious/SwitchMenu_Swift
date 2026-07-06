@@ -12,9 +12,6 @@ final class GameControllerManager {
 
     init(appState: AppState) {
         self.appState = appState
-        // Sans ça, macOS ne délivre les événements manette qu'à l'app au premier
-        // plan : dès qu'un jeu reprend le focus, le mode souris arrête de recevoir
-        // les mouvements du joystick.
         GCController.shouldMonitorBackgroundEvents = true
         NotificationCenter.default.addObserver(self, selector: #selector(controllerConnected),
                                                  name: .GCControllerDidConnect, object: nil)
@@ -38,7 +35,6 @@ final class GameControllerManager {
         self.controller = controller
         guard let gamepad = controller.extendedGamepad else { return }
 
-        // HOME reste toujours câblé en dur : sécurité + fermeture (non remappable)
         gamepad.buttonHome?.pressedChangedHandler = { [weak self] _, _, pressed in
             guard pressed else { return }
             DispatchQueue.main.async { self?.appState?.quitApp() }
@@ -83,7 +79,6 @@ final class GameControllerManager {
     private func handlePress(of identifier: ButtonIdentifier) {
         guard let state = appState else { return }
 
-        // Mode capture : on assigne le bouton pressé à l'action en attente
         if mappingStore.capturingAction != nil {
             mappingStore.assign(button: identifier)
             return

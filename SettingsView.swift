@@ -42,7 +42,6 @@ struct SettingsView: View {
     }
 }
 
-// MARK: - Onglet Raccourcis
 
 struct ShortcutsSettingsTab: View {
     @EnvironmentObject var store: ShortcutStore
@@ -162,9 +161,6 @@ struct ShortcutEditorView: View {
     }
 }
 
-// MARK: - Onglet Manette
-
-// MARK: - Onglet Manette
 
 struct ControllerMappingTab: View {
     @EnvironmentObject var mappingStore: KeyMappingStore
@@ -205,7 +201,6 @@ struct ControllerMappingTab: View {
     }
 }
 
-// MARK: - Onglet Retour
 
 struct TargetAppSettingsTab: View {
     @EnvironmentObject var targetAppStore: TargetAppStore

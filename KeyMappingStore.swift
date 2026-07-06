@@ -45,7 +45,6 @@ final class KeyMappingStore: ObservableObject {
         mapping.first(where: { $0.value == button })?.key
     }
 
-    /// Appelé pendant la capture : assigne le bouton pressé à l'action en attente
     func assign(button: ButtonIdentifier) {
         guard let action = capturingAction else { return }
         // Retire ce bouton d'une éventuelle autre action pour éviter les doublons

@@ -4,8 +4,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     var controllerManager: GameControllerManager?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Force le mode "agent" : pas d'icône dans le Dock, même si l'Info.plist
-        // généré par Xcode ne reprend pas la clé LSUIElement.
         NSApp.setActivationPolicy(.accessory)
     }
 
