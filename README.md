@@ -48,3 +48,4 @@ This project is built using:
 ---
 
 Developed with ❤️ by [Jellacious](https://github.com/jellacious).
+Note : AI was used in this project.
