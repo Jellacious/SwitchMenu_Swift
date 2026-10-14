@@ -1,8 +1,8 @@
 # SwitchMenu
 
-![SwitchMenu Preview](screenshots/preview.png)
-
 A modern macOS utility built with SwiftUI to map game controllers and improve accessibility. SwitchMenu provides a bridge between your physical controller inputs and system-level actions, allowing for a more fluid and accessible experience on macOS.
+
+![SwitchMenu Preview](screenshots/preview.png)
 
 ## 🚀 Overview
 
